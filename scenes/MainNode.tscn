@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/grave.png" type="Texture" id=1]
+[ext_resource path="res://assets/felpudoBate.png" type="Texture" id=2]
+[ext_resource path="res://assets/img_fundoChao.png" type="Texture" id=3]
+[ext_resource path="res://assets/felpudoIdle.png" type="Texture" id=4]
+
+[node name="MainNode" type="Node"]
+
+[node name="Background" type="Sprite" parent="."]
+position = Vector2( -758.5, -33.47 )
+scale = Vector2( 2.028, 2.102 )
+texture = ExtResource( 3 )
+centered = false
+
+[node name="Timberman" type="Node2D" parent="."]
+position = Vector2( 220, 1070 )
+
+[node name="Idle" type="Sprite" parent="Timberman"]
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 4 )
+
+[node name="Hit" type="Sprite" parent="Timberman"]
+visible = false
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+
+[node name="Grave" type="Sprite" parent="Timberman"]
+visible = false
+modulate = Color( 0.462745, 0.682353, 0.211765, 1 )
+position = Vector2( -46, 40 )
+scale = Vector2( 0.207, 0.145 )
+texture = ExtResource( 1 )
+flip_h = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Timberman"]
