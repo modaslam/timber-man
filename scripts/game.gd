@@ -8,6 +8,7 @@ onready var timberman = get_node("Timberman")
 onready var camera = get_node("Camera")
 onready var barrels = get_node("Barrels")
 onready var destBarrels = get_node("DestBarrels")
+onready var bar = get_node("Bar")
 
 const NORMAL_BARREL = 0
 const LEFT_BARREL = 1
@@ -19,6 +20,7 @@ var enemy
 func _ready():
 	randomize()
 	generateAllBarrels()
+	bar.connect("lost", self, "lose")
 
 
 func _input(event):
@@ -38,6 +40,8 @@ func _input(event):
 			
 			randomizeBarrel(Vector2(360, 1090 - 10*172))
 			descend()
+			
+			bar.add(0.014)
 			
 			if verifyCollision():
 				lose()
@@ -93,7 +97,8 @@ func descend():
 
 
 func lose():
-	
+	timberman.die()
+	bar.set_process(false)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
