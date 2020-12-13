@@ -42,6 +42,13 @@ func beginHit():
 	anim.play("hit")
 
 
+func die():
+	anim.stop()
+	idle.hide()
+	hit.hide()
+	grave.show()
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

@@ -28,7 +28,21 @@ func _input(event):
 			timberman.left()
 		else:
 			timberman.right()
-		timberman.beginHit()
+			
+		if !verifyCollision():
+			timberman.beginHit()
+			var bottomBarrel = barrels.get_children()[0]
+			barrels.remove_child(bottomBarrel)
+			destBarrels.add_child(bottomBarrel)
+			bottomBarrel.destroy(timberman.side)
+			
+			randomizeBarrel(Vector2(360, 1090 - 10*172))
+			descend()
+			
+			if verifyCollision():
+				lose()
+		else:
+			lose()
 
 
 func randomizeBarrel(pos):
@@ -61,6 +75,25 @@ func generateAllBarrels():
 		
 	for i in range(3, 10):
 		randomizeBarrel(Vector2(360, 1090 - i*172))
+
+
+func verifyCollision():
+	var side = timberman.side
+	var bottomBarrel = barrels.get_children()[0]
+	
+	if side == timberman.LEFT and bottomBarrel.is_in_group("leftBarrel") or side == timberman.RIGHT and bottomBarrel.is_in_group("rightBarrel"):
+		return true
+	else:
+		return false
+
+
+func descend():
+	for b in barrels.get_children():
+		b.position += Vector2(0, 172)
+
+
+func lose():
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

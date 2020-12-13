@@ -46,6 +46,7 @@ centered = false
 
 [node name="Timberman" type="Node2D" parent="."]
 position = Vector2( 220, 1070 )
+z_index = 1
 script = ExtResource( 5 )
 
 [node name="Idle" type="Sprite" parent="Timberman"]
