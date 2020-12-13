@@ -9,12 +9,20 @@ onready var camera = get_node("Camera")
 onready var barrels = get_node("Barrels")
 onready var destBarrels = get_node("DestBarrels")
 onready var bar = get_node("Bar")
+onready var scoreLabel = get_node("Control/Score")
 
 const NORMAL_BARREL = 0
 const LEFT_BARREL = 1
 const RIGHT_BARREL = 2
 
+const PLAYING = 1
+const LOST = 2
+
 var enemy
+
+var score = 0
+
+var state = PLAYING
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,7 +33,7 @@ func _ready():
 
 func _input(event):
 	event = camera.make_input_local(event)
-	if event is InputEventScreenTouch and event.pressed:
+	if event is InputEventScreenTouch and event.pressed and state == PLAYING:
 		if event.position.x < 360:
 			timberman.left()
 		else:
@@ -42,6 +50,8 @@ func _input(event):
 			descend()
 			
 			bar.add(0.014)
+			score += 1
+			scoreLabel.set_text(str(score))
 			
 			if verifyCollision():
 				lose()
@@ -99,7 +109,13 @@ func descend():
 func lose():
 	timberman.die()
 	bar.set_process(false)
+	state = LOST
+	get_node("Timer").start()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+
+func _on_Timer_timeout():
+	get_tree().reload_current_scene()
