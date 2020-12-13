@@ -12,7 +12,6 @@ func _ready():
 func _input(event):
 	event = camera.make_input_local(event)
 	if event is InputEventScreenTouch and event.pressed:
-		print(event.position)
 		if event.position.x < 360:
 			timberman.left()
 		else:
